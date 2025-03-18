@@ -1,0 +1,25 @@
+{
+  "name": "chatwoot-openai-webhook",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "serverless offline start --reloadHandler -t"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "2.8.5",
+    "env-var": "7.5.0",
+    "express": "4.21.2",
+    "serverless-http": "3.2.0"
+  },
+  "devDependencies": {
+    "@types/cors": "2.8.17",
+    "@types/express": "5.0.0",
+    "serverless-offline": "13.2.4",
+    "serverless-plugin-typescript": "2.1.5",
+    "typescript": "5.8.2"
+  }
+}

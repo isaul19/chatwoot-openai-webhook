@@ -1,0 +1,45 @@
+service: chatwoot-openai-webhook
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  memorySize: 128
+  timeout: 10
+  environment:
+    NODE_ENV: production
+
+functions:
+  app:
+    handler: main.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Requested-With
+
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Requested-With
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
