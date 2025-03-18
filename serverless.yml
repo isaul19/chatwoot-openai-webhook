@@ -9,6 +9,7 @@ provider:
   timeout: 10
   environment:
     NODE_ENV: production
+    CHATWOOT_API_KEY: 14BUhRuaycMY3ZKNaGg6YwyU
 
 functions:
   app:
@@ -42,4 +43,3 @@ functions:
 
 plugins:
   - serverless-plugin-typescript
-  - serverless-offline

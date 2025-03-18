@@ -6,7 +6,7 @@ export class WebhookRouter {
     const router = Router();
     const webhookController = new WebhookController();
 
-    router.get("/", webhookController.receiveData);
+    router.post("/", webhookController.receiveData);
 
     return router;
   }
