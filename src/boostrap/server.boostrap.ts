@@ -2,16 +2,18 @@ import express from "express";
 import cors from "cors";
 
 interface Options {
-  // PORT: number;
+  PORT: number;
   APP_ROUTER: express.Router;
 }
 
 export class Server {
   private readonly app = express();
   private readonly APP_ROUTER: express.Router;
+  private readonly PORT: number;
 
-  constructor({ APP_ROUTER }: Options) {
+  constructor({ APP_ROUTER, PORT }: Options) {
     this.APP_ROUTER = APP_ROUTER;
+    this.PORT = PORT;
 
     this.mountMiddlewares();
     this.mountRoutes();
@@ -35,9 +37,9 @@ export class Server {
     return this.app;
   };
 
-  // public start = () => {
-  //   this.app.listen(this.PORT, () => {
-  //     console.log(`Server running on port ${this.PORT}`);
-  //   });
-  // };
+  public start = () => {
+    this.app.listen(this.PORT, () => {
+      console.log(`Server running on port ${this.PORT}`);
+    });
+  };
 }

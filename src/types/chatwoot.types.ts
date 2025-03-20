@@ -29,7 +29,7 @@ export interface Conversation {
   contact_inbox: ContactInbox;
   id: number;
   inbox_id: number;
-  messages: Array<null[]>;
+  messages: Message[];
   labels: any[];
   meta: Meta;
   status: string;
@@ -47,6 +47,43 @@ export interface Conversation {
   updated_at: number;
 }
 
+export interface Message {
+  id: number;
+  content: string;
+  account_id: number;
+  inbox_id: number;
+  conversation_id: number;
+  message_type: number;
+  created_at: number;
+  updated_at: string;
+  private: boolean;
+  status: string;
+  source_id: string;
+  content_type: string;
+  content_attributes: Attributes;
+  sender_type: string;
+  sender_id: number;
+  external_source_ids: Attributes;
+  additional_attributes: Attributes;
+  processed_message_content: string;
+  sentiment: Attributes;
+  conversation: {
+    assignee_id: number;
+    unread_count: number;
+    last_activity_at: number;
+    contact_inbox: { source_id: string };
+  };
+  sender: {
+    id: number;
+    name: string;
+    available_name: string;
+    avatar_url: string;
+    type: string;
+    availability_status: null | string;
+    thumbnail: string;
+  };
+}
+
 export interface ContactInbox {
   id: number;
   contact_id: number;
@@ -59,10 +96,20 @@ export interface ContactInbox {
 }
 
 export interface Meta {
-  sender: null[];
-  assignee: null[];
+  sender: Sender;
+  assignee: Assignee;
   team: null;
   hmac_verified: boolean;
+}
+
+export interface Assignee {
+  id: number;
+  name: string;
+  available_name: string;
+  avatar_url: string;
+  type: string;
+  availability_status: null | string;
+  thumbnail: string;
 }
 
 export interface Sender {

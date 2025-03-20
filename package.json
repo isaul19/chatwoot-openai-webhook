@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "serverless offline start --reloadHandler -t"
+    "dev": "serverless offline --reloadHandler -t"
   },
   "keywords": [],
   "author": "",
@@ -15,11 +15,14 @@
     "dotenv": "^16.4.7",
     "env-var": "7.5.0",
     "express": "4.21.2",
-    "serverless-http": "3.2.0"
+    "pg": "^8.14.1",
+    "serverless-http": "3.2.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/cors": "2.8.17",
     "@types/express": "5.0.0",
+    "@types/pg": "^8.11.11",
     "serverless-plugin-typescript": "2.1.5",
     "typescript": "5.8.2"
   }

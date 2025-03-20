@@ -1,31 +1,34 @@
 import type { Request, Response } from "express";
 import { ChatwootRequest } from "../types/chatwoot.types";
 import { ChatwootService } from "../services/chatwoot.service";
+import { Print } from "../utils/print";
 
 export class WebhookController {
-  private chatwootService: ChatwootService;
+  private readonly chatwootService: ChatwootService;
 
   constructor() {
     this.chatwootService = new ChatwootService();
   }
 
   public receiveData = async (req: Request, res: Response) => {
-    console.log("📩 Recibiendo datos de Chatwoot Webhook...");
+    console.log("POST receiveData");
     const body: ChatwootRequest = req.body;
-    console.log(body);
 
     try {
-      const accountId = body.account.id;
-      const conversationId = body.conversation.id;
-      const message = "Hola! Esto es una respuesta automática 🚀";
+      const msgObj = body.conversation.messages[0];
+      if (msgObj.sender_type !== "User") {
+        const accountId = body.account.id;
+        const conversationId = body.conversation.id;
+        const message = "Hola! Esto es una respuesta automática 🚀";
 
-      const response = await this.chatwootService.sendMessage({
-        accountId,
-        conversationId,
-        message,
-      });
+        await this.chatwootService.sendMessage({
+          accountId,
+          conversationId,
+          message,
+          userId: msgObj.conversation.assignee_id,
+        });
+      }
 
-      console.log("✅ Mensaje enviado con éxito:", response);
       res.status(200).json({ message: "Mensaje enviado correctamente" });
     } catch (error) {
       console.error("❌ Error al procesar el webhook:", error);
