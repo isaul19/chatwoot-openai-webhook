@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { ChatwootRequest } from "../types/chatwoot.types";
 import { ChatwootService } from "../services/chatwoot.service";
 import { Print } from "../utils/print";
+import { questionToOpenaiAssistant } from "../utils/assistant";
 
 export class WebhookController {
   private readonly chatwootService: ChatwootService;
@@ -11,21 +12,19 @@ export class WebhookController {
   }
 
   public receiveData = async (req: Request, res: Response) => {
-    console.log("POST receiveData");
     const body: ChatwootRequest = req.body;
 
     try {
       const msgObj = body.conversation.messages[0];
-      if (msgObj.sender_type !== "User") {
-        const accountId = body.account.id;
-        const conversationId = body.conversation.id;
-        const message = "Hola! Esto es una respuesta automática 🚀";
 
-        await this.chatwootService.sendMessage({
-          accountId,
-          conversationId,
-          message,
+      // Respond only if the message was not created by a User (i.e., it was sent by the Chatwoot Agent)
+      if (msgObj.sender_type !== "User") {
+        await this.chatwootService.sendMessageToAssistant({
+          accountId: body.account.id,
+          conversationId: body.conversation.id,
+          message: body.content,
           userId: msgObj.conversation.assignee_id,
+          idInbox: body.conversation.contact_inbox.id,
         });
       }
 

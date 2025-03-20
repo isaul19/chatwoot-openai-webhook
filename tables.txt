@@ -1,0 +1,12 @@
+accounts_openai {
+  id
+  account_phone
+  token_openai
+}
+
+
+conversations_threads {
+  id
+  id_conversations
+  id_thread
+}

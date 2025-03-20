@@ -15,6 +15,7 @@
     "dotenv": "^16.4.7",
     "env-var": "7.5.0",
     "express": "4.21.2",
+    "openai": "^4.88.0",
     "pg": "^8.14.1",
     "serverless-http": "3.2.0",
     "ts-node": "^10.9.2"
