@@ -50,10 +50,17 @@ export class ChatwootService {
     message,
     idInbox,
   }: SendMessageParam) => {
+    console.log("sendMessageToAssistant");
+
     const { id_assistant, openai_token } = await this.chatwootRepository.getOpenaiDataByIdInbox(
       idInbox
     );
+
+    console.log("get id_assistant and openai_token");
+
     const { id_thread } = await this.chatwootRepository.getThreadByIdConversation(conversationId);
+
+    console.log("get id_thread");
 
     const openaiResponse = await questionToOpenaiAssistant({
       idAssistant: id_assistant,
@@ -63,6 +70,8 @@ export class ChatwootService {
       conversationId: conversationId,
     });
 
+    console.log("questionToOpenaiAssistant");
+
     await this.sendMessage({
       accountId,
       userId,
@@ -70,5 +79,6 @@ export class ChatwootService {
       message: openaiResponse,
       idInbox,
     });
+    console.log("sendMessage");
   };
 }

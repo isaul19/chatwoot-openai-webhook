@@ -3,6 +3,8 @@ import { Env } from "../config/adapters/env.adapter";
 
 export class Database {
   private async startConnection(): Promise<Client> {
+    console.log("startConnection");
+
     const client = new Client({
       host: Env.DB_HOST,
       user: Env.DB_USER,

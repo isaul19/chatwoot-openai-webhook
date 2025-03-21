@@ -12,6 +12,7 @@ export class WebhookController {
   }
 
   public receiveData = async (req: Request, res: Response) => {
+    console.log("receiveData");
     const body: ChatwootRequest = req.body;
 
     try {
@@ -19,14 +20,18 @@ export class WebhookController {
 
       // Respond only if the message was not created by a User (i.e., it was sent by the Chatwoot Agent)
       if (msgObj.sender_type !== "User") {
+        console.log("Un usuario envio un mensaje");
+        console.log({ body: JSON.stringify(body) });
+
         await this.chatwootService.sendMessageToAssistant({
           accountId: body.account.id,
           conversationId: body.conversation.id,
           message: body.content,
           userId: msgObj.conversation.assignee_id,
-          idInbox: body.conversation.contact_inbox.id,
+          idInbox: body.conversation.contact_inbox.inbox_id,
         });
       }
+      console.log("fin de receiveData");
 
       res.status(200).json({ message: "Mensaje enviado correctamente" });
     } catch (error) {

@@ -25,4 +25,8 @@ export class Env {
   public static get DB_PORT() {
     return get("DB_PORT").default(5433).asInt();
   }
+
+  public static get NODE_ENV() {
+    return get("NODE_ENV").default("development").asEnum(["development", "production"]);
+  }
 }
